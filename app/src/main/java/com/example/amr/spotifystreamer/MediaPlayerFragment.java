@@ -18,6 +18,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -31,6 +34,8 @@ import kaaes.spotify.webapi.android.models.ErrorDetails;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
 import retrofit.RetrofitError;
+
+import static android.net.Uri.*;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -64,7 +69,7 @@ public class MediaPlayerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_media_player, container, false);
         Intent intent=getActivity().getIntent();
         songID=intent.getStringExtra("Song");
-        Log.v("Song ID",songID);
+        Log.v("Song ID", songID);
         getSongTask x=new getSongTask();
         x.execute(songID);
 
@@ -73,12 +78,11 @@ public class MediaPlayerFragment extends Fragment {
         b2 = (Button) rootView.findViewById(R.id.button2);
         b3 = (Button) rootView.findViewById(R.id.button3);
         b4 = (Button) rootView.findViewById(R.id.button4);
-        iv = (ImageView) rootView.findViewById(R.id.imageView);
+        iv = (ImageView) rootView.findViewById(R.id.songImage);
 
-        tx1 = (TextView) rootView.findViewById(R.id.textView2);
-        tx2 = (TextView) rootView.findViewById(R.id.textView3);
-        tx3 = (TextView) rootView.findViewById(R.id.textView4);
-        tx3.setText("Song.mp3");
+        tx1 = (TextView) rootView.findViewById(R.id.artistName);
+        tx2 = (TextView) rootView.findViewById(R.id.songName);
+        tx3=(TextView) rootView.findViewById(R.id.seekText);
 
 
         seekbar = (SeekBar) rootView.findViewById(R.id.seekBar);
@@ -89,7 +93,7 @@ public class MediaPlayerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Playing sound", Toast.LENGTH_SHORT).show();
-//                mediaPlayer.start();
+                mediaPlayer.start();
 
                 finalTime = mediaPlayer.getDuration();
                 startTime = mediaPlayer.getCurrentPosition();
@@ -98,13 +102,13 @@ public class MediaPlayerFragment extends Fragment {
                     seekbar.setMax((int) finalTime);
                     oneTimeOnly = 1;
                 }
-                tx2.setText(String.format("%d min, %d sec",
-                                TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
-                                TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
-                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finalTime)))
-                );
+//                tx3.setText(String.format("%d min, %d sec",
+//                                TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
+//                                TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
+//                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finalTime)))
+//                );
 
-                tx1.setText(String.format("%d min, %d sec",
+                tx3.setText(String.format("%d min, %d sec",
                                 TimeUnit.MILLISECONDS.toMinutes((long) startTime),
                                 TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
                                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime)))
@@ -175,7 +179,7 @@ public class MediaPlayerFragment extends Fragment {
         };
 
 
-    class getSongTask extends AsyncTask<String, Void, String> {
+    class getSongTask extends AsyncTask<String, Void, Track> {
 
 
         @Override
@@ -184,7 +188,7 @@ public class MediaPlayerFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... params)
+        protected Track doInBackground(String... params)
         {
             try
             {
@@ -192,7 +196,7 @@ public class MediaPlayerFragment extends Fragment {
                 Log.v("Passed Somng Id", songID);
                 Track mytrack = spotify.getTrack(songID);
 
-                return mytrack.uri;
+                return mytrack;
             }catch (RetrofitError error)
             {
                 ErrorDetails details = SpotifyError.fromRetrofitError(error).getErrorDetails();
@@ -202,8 +206,9 @@ public class MediaPlayerFragment extends Fragment {
             return null;
         }
         @Override
-        protected void onPostExecute(String tracks) {
+        protected void onPostExecute(Track tracks) {
             super.onPostExecute(tracks);
+
 //            try {
 //                Log.v("Tracks List", tracks.toString());
 //                dataAdabter = new CustomListTopTen(getActivity(), (ArrayList<Track>) tracks);
@@ -211,9 +216,24 @@ public class MediaPlayerFragment extends Fragment {
 //                Log.v("1", "0");
 //            }catch (Exception e){
 //                Log.v("onpostexecute error",e.toString());
-            mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse("spotify:track:5doYtCoJ8KpfkFczP3F2ad"));
-            mediaPlayer.start();
-            Log.v("URI Song",tracks);
+            try {
+                Picasso.with(getActivity()).load(String.valueOf(tracks.album.images.get(0))).into(iv);
+                tx1.setText(tracks.album.name);
+                tx2.setText(tracks.name);
+                mediaPlayer.setDataSource(getActivity(), Uri.parse(tracks.preview_url));
+                mediaPlayer.prepare();
+//                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                    @Override
+//                    public void onPrepared(MediaPlayer mp) {
+//                        mp.start();
+//                    }
+//                });
+            } catch (IOException e) {
+                Log.v("Playback error",e.toString());
+            }
+
+//            mediaPlayer.start();
+            Log.v("URI Song", tracks.name);
 // }
         }
     }
