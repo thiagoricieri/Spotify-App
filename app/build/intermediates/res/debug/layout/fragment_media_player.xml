@@ -3,64 +3,63 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:gravity="center">
 
-    <TextView android:text="Spotify Streamer" android:layout_width="wrap_content"
+    <TextView android:text="Spotify Streamer Media Player" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Title"
-        android:textSize="35dp"
+        android:textSize="25dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:singleLine="false"
+        android:theme="@style/AppTheme" />
 
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/songImage"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_toRightOf="@+id/seekBar"
+        android:layout_alignLeft="@+id/Title"
+        android:layout_above="@+id/songName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/artistName" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=">>"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="||"
-        android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:id="@+id/pauseButton"
+        android:background="@android:drawable/ic_media_pause"
+        android:layout_alignTop="@+id/previosButton"
+        android:layout_toRightOf="@+id/previosButton"
+        android:layout_toEndOf="@+id/previosButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:id="@+id/button3"
-        android:layout_alignTop="@+id/button2"
-        android:layout_toRightOf="@+id/button2"
-        android:layout_toEndOf="@+id/button2" />
+        android:id="@+id/playButton"
+        android:background="@android:drawable/ic_media_play"
+        android:layout_alignTop="@+id/pauseButton"
+        android:layout_toRightOf="@+id/seekText"
+        android:layout_toEndOf="@+id/seekText" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
-        android:layout_alignTop="@+id/button3"
-        android:layout_toRightOf="@+id/button3"
-        android:layout_toEndOf="@+id/button3" />
+        android:id="@+id/nextButton"
+        android:background="@android:drawable/ic_media_next"
+        android:layout_below="@+id/seekBar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/seekBar"
-        android:layout_above="@+id/button3"
+        android:layout_above="@+id/playButton"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -69,18 +68,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:id="@+id/artistName"
-        android:layout_below="@+id/Title"
-        android:layout_alignLeft="@+id/Title"
-        android:layout_alignStart="@+id/Title"
-        android:layout_alignRight="@+id/Title"
-        android:layout_alignEnd="@+id/Title" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/songName"
         android:layout_above="@+id/seekBar"
         android:layout_centerHorizontal="true"
@@ -89,11 +76,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/seekText"
-        android:layout_above="@+id/songImage"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_above="@+id/seekBar"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previosButton"
+        android:background="@android:drawable/ic_media_previous"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/artistName"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:layout_below="@+id/Title"
+        android:layout_alignLeft="@+id/Title"
+        android:layout_alignStart="@+id/Title"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:minHeight="@dimen/abc_text_size_medium_material"
+        android:minWidth="@dimen/abc_text_size_medium_material"
+        android:layout_alignRight="@+id/Title"
+        android:layout_alignEnd="@+id/Title" />
 
 
 </RelativeLayout><!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/layout/fragment_media_player.xml -->

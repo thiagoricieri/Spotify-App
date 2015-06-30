@@ -52,13 +52,14 @@ import retrofit.RetrofitError;
  */
 public class ArtistTopTenFragment extends Fragment {
     private Map<String, Object> spotifyTopTrackQueryParams;
-
+    Intent newintent;
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
     ArrayList<Track> trackList =new ArrayList<Track>();
     CustomListTopTen dataAdabter;
     TopTenTask toptenTask;
     ListView resultList;
+    List tracks;
     private static final String PARAM_QUERY_COUNTRY = "country";
 
     public ArtistTopTenFragment() {
@@ -86,8 +87,9 @@ public class ArtistTopTenFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Track me=(Track) dataAdabter.getItem(position);
-                    Intent newintent=new Intent(getActivity(),MediaPlayer.class);
+                    newintent=new Intent(getActivity(),MediaPlayer.class);
                     newintent.putExtra("Song", me.id);
+
                     Log.v("Song ID before send",me.id);
                     startActivity(newintent);
 
@@ -119,7 +121,7 @@ public class ArtistTopTenFragment extends Fragment {
                 Map<String, Object> options = new Hashtable<String, Object>();
                 options.put("country", "US"); //Replace here
                 Tracks tracksPager = spotify.getArtistTopTrack(this.artistID, options);
-                List tracks = new ArrayList<>();
+                tracks = new ArrayList<>();
                 for (Track track : tracksPager.tracks)
                 {
                     Track localTrack = track;

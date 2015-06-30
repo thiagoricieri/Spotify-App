@@ -2,16 +2,24 @@ package com.example.amr.spotifystreamer;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-
+//    Display display = getWindowManager().getDefaultDisplay();
+//    int width = display.getWidth();
+//    int height = display.getHeight();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        if(width== 640 && height==480){
+//        setContentView(R.layout.activity_main);}
+//        else{
+//            setContentView(R.layout.activity_main_tablet);
+//        }
     }
 
 

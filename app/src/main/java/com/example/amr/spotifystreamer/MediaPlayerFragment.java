@@ -21,21 +21,17 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyError;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ErrorDetails;
 import kaaes.spotify.webapi.android.models.Track;
+import kaaes.spotify.webapi.android.models.TrackSimple;
 import kaaes.spotify.webapi.android.models.Tracks;
 import retrofit.RetrofitError;
-
-import static android.net.Uri.*;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -51,12 +47,12 @@ public class MediaPlayerFragment extends Fragment {
     String songID;
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
-
     private int forwardTime = 5000;
     private int backwardTime = 5000;
     private SeekBar seekbar;
     private TextView tx1, tx2, tx3;
-
+    Artist myartist;
+    Tracks topten;
     public static int oneTimeOnly = 0;
 
     public MediaPlayerFragment() {
@@ -74,10 +70,10 @@ public class MediaPlayerFragment extends Fragment {
         x.execute(songID);
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        b1 = (Button) rootView.findViewById(R.id.button);
-        b2 = (Button) rootView.findViewById(R.id.button2);
-        b3 = (Button) rootView.findViewById(R.id.button3);
-        b4 = (Button) rootView.findViewById(R.id.button4);
+        b1 = (Button) rootView.findViewById(R.id.previosButton);
+        b2 = (Button) rootView.findViewById(R.id.pauseButton);
+        b3 = (Button) rootView.findViewById(R.id.playButton);
+        b4 = (Button) rootView.findViewById(R.id.nextButton);
         iv = (ImageView) rootView.findViewById(R.id.songImage);
 
         tx1 = (TextView) rootView.findViewById(R.id.artistName);
@@ -166,7 +162,7 @@ public class MediaPlayerFragment extends Fragment {
         private Runnable UpdateSongTime = new Runnable() {
             public void run() {
                 startTime = mediaPlayer.getCurrentPosition();
-                tx1.setText(String.format("%d min, %d sec",
+                tx3.setText(String.format("%d min, %d sec",
 
                                 TimeUnit.MILLISECONDS.toMinutes((long) startTime),
                                 TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
@@ -196,6 +192,7 @@ public class MediaPlayerFragment extends Fragment {
                 Log.v("Passed Somng Id", songID);
                 Track mytrack = spotify.getTrack(songID);
 
+
                 return mytrack;
             }catch (RetrofitError error)
             {
@@ -217,7 +214,7 @@ public class MediaPlayerFragment extends Fragment {
 //            }catch (Exception e){
 //                Log.v("onpostexecute error",e.toString());
             try {
-                Picasso.with(getActivity()).load(String.valueOf(tracks.album.images.get(0))).into(iv);
+                Picasso.with(getActivity()).load(tracks.album.images.get(0).url).into(iv);
                 tx1.setText(tracks.album.name);
                 tx2.setText(tracks.name);
                 mediaPlayer.setDataSource(getActivity(), Uri.parse(tracks.preview_url));
@@ -233,7 +230,7 @@ public class MediaPlayerFragment extends Fragment {
             }
 
 //            mediaPlayer.start();
-            Log.v("URI Song", tracks.name);
+            Log.v("URI Song", tracks.preview_url);
 // }
         }
     }
