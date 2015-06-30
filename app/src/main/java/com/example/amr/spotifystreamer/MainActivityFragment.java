@@ -6,6 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -92,7 +94,7 @@ public class MainActivityFragment extends Fragment  {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            searchTask=new searchArtist();
+            searchTask = new searchArtist();
 
             searchTask.execute(searchText.getText().toString());
 
@@ -140,27 +142,54 @@ public class MainActivityFragment extends Fragment  {
             Log.v("Artists List", artists.toString());
             Log.v("Artist", artists.get(0).name);
             Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
+int counter=0;
             for(Artist local:artists) {
-
-                ContentValues artistValues = new ContentValues();
-
-                artistValues.put(ArtistEntry.COLUMN_ARTIST_ID, local.id);
-                artistValues.put(ArtistEntry.COLUMN_ARTIST_NAME, local.name);
-//                artistValues.put(ArtistEntry.COLUMN_ARTIST_IMAGE, local.images.get(0).url);
-                cv.add(artistValues);
+addArtist(local.id,local.name, String.valueOf(local.images.get(0)));
                   }
-            int inserted =0 ;
-            if(cv.size()>0){
-                ContentValues[] cvArray= new ContentValues[cv.size()];
-                cv.toArray();
-                inserted=getActivity().getContentResolver().bulkInsert(ArtistEntry.CONTENT_URI,cvArray);
-
-            }
             dataAdabter= new CustomList(getActivity(),(ArrayList<Artist>)artists);
             resultList.setAdapter(dataAdabter);
             Log.v("1", "0");
 
         }
+    }
+    void addArtist(String artistID, String artistName, String artistImage) {
+        long locationId;
+
+        // First, check if the location with this city name exists in the db
+        Cursor artistCursor = getActivity().getContentResolver().query(
+                ArtistEntry.CONTENT_URI,
+                new String[]{ArtistEntry._ID},
+                ArtistEntry.COLUMN_ARTIST_ID + " = ?",
+                new String[]{artistID},
+                null);
+
+        if (artistCursor.moveToFirst()) {
+            int locationIdIndex = artistCursor.getColumnIndex(ArtistEntry._ID);
+            locationId = artistCursor.getLong(locationIdIndex);
+        } else {
+            // Now that the content provider is set up, inserting rows of data is pretty simple.
+            // First create a ContentValues object to hold the data you want to insert.
+            ContentValues artistValues = new ContentValues();
+
+            // Then add the data, along with the corresponding name of the data type,
+            // so the content provider knows what kind of value is being inserted.
+            artistValues.put(ArtistEntry.COLUMN_ARTIST_ID,artistID);
+            artistValues.put(ArtistEntry.COLUMN_ARTIST_NAME, artistName);
+            artistValues.put(ArtistEntry.COLUMN_ARTIST_IMAGE, artistImage);
+
+            // Finally, insert location data into the database.
+
+            Uri insertedUri = getActivity().getContentResolver().insert(
+                    ArtistEntry.CONTENT_URI,
+                    artistValues
+            );
+
+            // The resulting URI contains the ID for the row.  Extract the locationId from the Uri.
+             }
+
+        artistCursor.close();
+        // Wait, that worked?  Yes!
+
     }
 
 }

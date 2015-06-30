@@ -35,6 +35,10 @@
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
         </activity>
+        <provider
+            android:authorities="com.example.amr.spotifystreamer"
+            android:name=".data.AppProvider" />
+
     </application>
 
 </manifest>
