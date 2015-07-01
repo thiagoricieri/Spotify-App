@@ -12,55 +12,47 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-//    Display display = getWindowManager().getDefaultDisplay();
-//    int width = display.getWidth();
-//    int height = display.getHeight();
+
+static  int screenWidth;
+   static int screenHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int screenWidth = displaymetrics.widthPixels;
-        int screenHeight = displaymetrics.heightPixels;
-//
-//        if(screenWidth > screenHeight)
-//        {
-////Landscape
-////set your landscape drawable
-//            ArtistTopTenFragment topten=new ArtistTopTenFragment();
-//            MainActivityFragment artist=new MainActivityFragment();
-//            FragmentManager fm=getFragmentManager();
-//            FragmentTransaction ft=fm.beginTransaction();
-//            ft.add(R.id.artistfragment,artist,"Artist Search Fragment");
-//            ft.add(R.id.toptenfragment,topten,"Artist Search Fragment");
-//            setContentView(R.layout.activity_main_tablet);
-////        }
-//        else
-//        {
-//portrait
-//set your portrait drawable
+      screenWidth = displaymetrics.widthPixels;
+        screenHeight = displaymetrics.heightPixels;
+
+
+        if(screenWidth > screenHeight)
+        {
+            ArtistTopTenFragment topten=new ArtistTopTenFragment();
+            MainActivityFragment artist=new MainActivityFragment();
+            android.support.v4.app.FragmentManager fm=getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction ft=fm.beginTransaction();
+            ft.add(R.id.artistfragment,artist,"Artist Search Fragment");
+            ft.add(R.id.toptenfragment,topten,"Top Ten Fragment");
+            setContentView(R.layout.activity_main_tablet);
+        }
+        else
+        {
             setContentView(R.layout.activity_main);
-//        }
+        }
 
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

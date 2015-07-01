@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import com.example.amr.spotifystreamer.data.AppContract.*;
 import com.example.amr.spotifystreamer.data.AppDbHelper;
 import com.example.amr.spotifystreamer.data.AppProvider;
 import com.squareup.picasso.Picasso;
-
+import  com.example.amr.spotifystreamer.ArtistAdapter.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -48,6 +49,15 @@ import kaaes.spotify.webapi.android.models.ArtistsPager;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment  {
+    static final int COL_ARTIST_ID = 0;
+    static final int COL_ARTIST_NAME = 1;
+    static final int COL_ARTIST_IMAGE = 2;
+    static final int COL_TRACK_ID = 0;
+    static final int COL_TRACK_NAME = 1;
+    static final int COL_ALBUM_NAME = 2;
+    static final int COL_ALBUM_IMAGE = 3;
+
+
 
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
@@ -65,7 +75,6 @@ public class MainActivityFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootview=inflater.inflate(R.layout.fragment_main, container, false);
         resultList= (ListView) rootview.findViewById(R.id.resultList);
         resultList.setAdapter(dataAdabter);
@@ -75,11 +84,19 @@ public class MainActivityFragment extends Fragment  {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try{
                     Artist me = (Artist) dataAdabter.getItem(position);
-                                   Intent intent=new Intent(getActivity(),ArtistTopTen.class);
-                intent.putExtra("ar",me.id );
-                Log.v("Artist",me.id);
-                startActivity(intent);
+                    ArtistTopTenFragment.artistID=me.id;
+                    if(MainActivity.screenWidth > MainActivity.screenHeight){
+                        getFragmentManager().beginTransaction().add(R.id.toptenfragment,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 
+                    }
+                    else {
+
+
+                        Log.v("Land","por");
+   Intent intent = new Intent(getActivity(), ArtistTopTen.class);
+                        Log.v("Artist", me.id);
+                        startActivity(intent);
+                    }
             }catch (Exception e){
                     Log.v("Starting new intent ",e.toString());
                 }
@@ -144,7 +161,7 @@ public class MainActivityFragment extends Fragment  {
             Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
 int counter=0;
             for(Artist local:artists) {
-//addArtist(local.id,local.name, String.valueOf(local.images.get(0)));
+addArtist(local.id,local.name, local.images.toString());
                   }
             dataAdabter= new CustomList(getActivity(),(ArrayList<Artist>)artists);
             resultList.setAdapter(dataAdabter);
@@ -155,7 +172,7 @@ int counter=0;
     void addArtist(String artistID, String artistName, String artistImage) {
         long locationId;
 
-        // First, check if the location with this city name exists in the db
+
         Cursor artistCursor = getActivity().getContentResolver().query(
                 ArtistEntry.CONTENT_URI,
                 new String[]{ArtistEntry._ID},
@@ -167,28 +184,23 @@ int counter=0;
             int locationIdIndex = artistCursor.getColumnIndex(ArtistEntry._ID);
             locationId = artistCursor.getLong(locationIdIndex);
         } else {
-            // Now that the content provider is set up, inserting rows of data is pretty simple.
-            // First create a ContentValues object to hold the data you want to insert.
+
             ContentValues artistValues = new ContentValues();
 
-            // Then add the data, along with the corresponding name of the data type,
-            // so the content provider knows what kind of value is being inserted.
+
             artistValues.put(ArtistEntry.COLUMN_ARTIST_ID,artistID);
             artistValues.put(ArtistEntry.COLUMN_ARTIST_NAME, artistName);
             artistValues.put(ArtistEntry.COLUMN_ARTIST_IMAGE, artistImage);
 
-            // Finally, insert location data into the database.
 
             Uri insertedUri = getActivity().getContentResolver().insert(
                     ArtistEntry.CONTENT_URI,
                     artistValues
             );
 
-            // The resulting URI contains the ID for the row.  Extract the locationId from the Uri.
              }
 
         artistCursor.close();
-        // Wait, that worked?  Yes!
 
     }
 

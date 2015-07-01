@@ -2,10 +2,13 @@ package com.example.amr.spotifystreamer;
 
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -25,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.amr.spotifystreamer.data.AppContract;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -60,10 +64,12 @@ public class ArtistTopTenFragment extends Fragment {
     TopTenTask toptenTask;
     ListView resultList;
     String[] trackUrls;
-
+    static String artistID;
     private static final String PARAM_QUERY_COUNTRY = "country";
 
+
     public ArtistTopTenFragment() {
+
     }
 
 
@@ -74,8 +80,8 @@ public class ArtistTopTenFragment extends Fragment {
 
         View rootview=inflater.inflate(R.layout.fragment_artist_top_ten, container, false);
         Intent intent = getActivity().getIntent();
-        String artistID=intent.getStringExtra("ar");
-        Log.v("artist ID",artistID.toString());
+//        artistID=intent.getStringExtra("ar");
+//        Log.v("artist ID",artistID.toString());
         spotifyTopTrackQueryParams = new Hashtable<>();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String countryCode = preferences.getString(getString(R.string.country_pref_key), getString(R.string.country_pref_default_value));
@@ -148,6 +154,9 @@ public class ArtistTopTenFragment extends Fragment {
             super.onPostExecute(tracks);
             try {
                 Log.v("Tracks List", tracks.toString());
+ for(Track x:tracks){
+     addArtist(x.id,x.name,x.album.name,x.album.images.get(0).url);
+ }
                 dataAdabter = new CustomListTopTen(getActivity(), (ArrayList<Track>) tracks);
                 resultList.setAdapter(dataAdabter);
                 Log.v("1", "0");
@@ -156,8 +165,49 @@ public class ArtistTopTenFragment extends Fragment {
             }
         }
     }
+    void addArtist(String trackID,String trackName, String albumName, String albumImage) {
+        long locationId;
+
+        // First, check if the location with this city name exists in the db
+        Cursor trackCursor = getActivity().getContentResolver().query(
+                AppContract.TrackEntry.CONTENT_URI,
+                new String[]{AppContract.TrackEntry._ID},
+                AppContract.TrackEntry.COLUMN_TRACK_ID + " = ?",
+                new String[]{trackID},
+                null);
+
+        if (trackCursor.moveToFirst()) {
+            int locationIdIndex = trackCursor.getColumnIndex(AppContract.TrackEntry._ID);
+            locationId = trackCursor.getLong(locationIdIndex);
+        } else {
+            // Now that the content provider is set up, inserting rows of data is pretty simple.
+            // First create a ContentValues object to hold the data you want to insert.
+            ContentValues trackValues = new ContentValues();
+
+            // Then add the data, along with the corresponding name of the data type,
+            // so the content provider knows what kind of value is being inserted.
+            trackValues.put(AppContract.TrackEntry.COLUMN_TRACK_ID, trackID);
+            trackValues.put(AppContract.TrackEntry.COLUMN_TRACK_NAME, trackName);
+            trackValues.put(AppContract.TrackEntry.COLUMN_ALBUM_NAME, albumName);
+            trackValues.put(AppContract.TrackEntry.COLUMN_ALBUM_IMAGE, albumImage);
+            // Finally, insert location data into the database.
+
+            Uri insertedUri = getActivity().getContentResolver().insert(
+                    AppContract.TrackEntry.CONTENT_URI,
+                    trackValues
+            );
+
+            // The resulting URI contains the ID for the row.  Extract the locationId from the Uri.
+        }
+
+        trackCursor.close();
+        // Wait, that worked?  Yes!
+
+    }
 
 }
+
+
 class CustomListTopTen extends ArrayAdapter{
 
     private final Activity context;

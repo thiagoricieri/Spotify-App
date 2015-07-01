@@ -27,7 +27,6 @@
         android:orientation="vertical" >
         <fragment
             class="com.example.amr.spotifystreamer.ArtistTopTenFragment"
-
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/toptenfragment"
             android:name="com.example.amr.spotifystreamer.ArtistTopTenFragment"
