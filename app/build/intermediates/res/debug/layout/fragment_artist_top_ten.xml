@@ -20,5 +20,6 @@
             android:id="@+id/topTenlistView"
             android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
+
 </RelativeLayout>
 <!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/layout/fragment_artist_top_ten.xml -->

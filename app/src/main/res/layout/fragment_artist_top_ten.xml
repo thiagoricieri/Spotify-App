@@ -20,4 +20,5 @@
             android:id="@+id/topTenlistView"
             android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
+
 </RelativeLayout>

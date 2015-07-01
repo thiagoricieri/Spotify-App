@@ -144,7 +144,7 @@ public class MainActivityFragment extends Fragment  {
             Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
 int counter=0;
             for(Artist local:artists) {
-addArtist(local.id,local.name, String.valueOf(local.images.get(0)));
+//addArtist(local.id,local.name, String.valueOf(local.images.get(0)));
                   }
             dataAdabter= new CustomList(getActivity(),(ArrayList<Artist>)artists);
             resultList.setAdapter(dataAdabter);

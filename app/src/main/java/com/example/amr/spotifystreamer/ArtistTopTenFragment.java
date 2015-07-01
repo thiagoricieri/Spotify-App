@@ -55,11 +55,12 @@ public class ArtistTopTenFragment extends Fragment {
     Intent newintent;
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
-    ArrayList<Track> trackList =new ArrayList<Track>();
+    ArrayList<Track> tracks =new ArrayList<Track>();
     CustomListTopTen dataAdabter;
     TopTenTask toptenTask;
     ListView resultList;
-    List tracks;
+    String[] trackUrls;
+
     private static final String PARAM_QUERY_COUNTRY = "country";
 
     public ArtistTopTenFragment() {
@@ -82,15 +83,21 @@ public class ArtistTopTenFragment extends Fragment {
         resultList= (ListView) rootview.findViewById(R.id.topTenlistView);
         toptenTask=new TopTenTask();
         toptenTask.execute(artistID);
+        int i=0;
+        for(Track x : tracks){
+            trackUrls[i]=(x.id);
+            i++;
+        }
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Track me=(Track) dataAdabter.getItem(position);
                     newintent=new Intent(getActivity(),MediaPlayer.class);
-                    newintent.putExtra("Song", me.id);
 
-                    Log.v("Song ID before send",me.id);
+                    newintent.putExtra("IDs",me.id);
+
+
                     startActivity(newintent);
 
                 } catch (Exception e) {

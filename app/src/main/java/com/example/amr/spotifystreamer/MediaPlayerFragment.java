@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
@@ -29,7 +30,6 @@ import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ErrorDetails;
 import kaaes.spotify.webapi.android.models.Track;
-import kaaes.spotify.webapi.android.models.TrackSimple;
 import kaaes.spotify.webapi.android.models.Tracks;
 import retrofit.RetrofitError;
 
@@ -39,12 +39,13 @@ import retrofit.RetrofitError;
 public class MediaPlayerFragment extends Fragment {
     MediaPlayer mediaPlayer = new MediaPlayer();
 
-    private Button b1, b2, b3, b4;
-    private ImageView iv;
+    private Button previousButton, pauseButton, playButton, nextButton;
+    private ImageView albumartImageView;
     private double startTime = 0;
     private double finalTime = 0;
     private Handler myHandler = new Handler();
     String songID;
+String[] trackID;
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
     private int forwardTime = 5000;
@@ -53,6 +54,7 @@ public class MediaPlayerFragment extends Fragment {
     private TextView tx1, tx2, tx3;
     Artist myartist;
     Tracks topten;
+    int position;
     public static int oneTimeOnly = 0;
 
     public MediaPlayerFragment() {
@@ -61,20 +63,23 @@ public class MediaPlayerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final getSongTask x=new getSongTask();
 
+        position=0;
         View rootView = inflater.inflate(R.layout.fragment_media_player, container, false);
         Intent intent=getActivity().getIntent();
-        songID=intent.getStringExtra("Song");
-        Log.v("Song ID", songID);
-        getSongTask x=new getSongTask();
-        x.execute(songID);
+        songID=intent.getStringExtra("IDs");
+
+
+         x.execute(songID);
+
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        b1 = (Button) rootView.findViewById(R.id.previosButton);
-        b2 = (Button) rootView.findViewById(R.id.pauseButton);
-        b3 = (Button) rootView.findViewById(R.id.playButton);
-        b4 = (Button) rootView.findViewById(R.id.nextButton);
-        iv = (ImageView) rootView.findViewById(R.id.songImage);
+        previousButton = (Button) rootView.findViewById(R.id.previosButton);
+        pauseButton = (Button) rootView.findViewById(R.id.pauseButton);
+        playButton = (Button) rootView.findViewById(R.id.playButton);
+        nextButton = (Button) rootView.findViewById(R.id.nextButton);
+        albumartImageView = (ImageView) rootView.findViewById(R.id.songImage);
 
         tx1 = (TextView) rootView.findViewById(R.id.artistName);
         tx2 = (TextView) rootView.findViewById(R.id.songName);
@@ -83,9 +88,9 @@ public class MediaPlayerFragment extends Fragment {
 
         seekbar = (SeekBar) rootView.findViewById(R.id.seekBar);
         seekbar.setClickable(false);
-        b2.setEnabled(false);
+        pauseButton.setEnabled(false);
 
-        b3.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Playing sound", Toast.LENGTH_SHORT).show();
@@ -98,11 +103,6 @@ public class MediaPlayerFragment extends Fragment {
                     seekbar.setMax((int) finalTime);
                     oneTimeOnly = 1;
                 }
-//                tx3.setText(String.format("%d min, %d sec",
-//                                TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
-//                                TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
-//                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finalTime)))
-//                );
 
                 tx3.setText(String.format("%d min, %d sec",
                                 TimeUnit.MILLISECONDS.toMinutes((long) startTime),
@@ -112,48 +112,34 @@ public class MediaPlayerFragment extends Fragment {
 
                 seekbar.setProgress((int) startTime);
                 myHandler.postDelayed(UpdateSongTime, 100);
-                b2.setEnabled(true);
-                b3.setEnabled(false);
+                pauseButton.setEnabled(true);
+                playButton.setEnabled(false);
             }
         });
 
-        b2.setOnClickListener(new View.OnClickListener() {
+        pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Pausing sound", Toast.LENGTH_SHORT).show();
                 mediaPlayer.pause();
-                b2.setEnabled(false);
-                b3.setEnabled(true);
+                pauseButton.setEnabled(false);
+                playButton.setEnabled(true);
             }
         });
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int temp = (int) startTime;
-
-                if ((temp + forwardTime) <= finalTime) {
-                    startTime = startTime + forwardTime;
-                    mediaPlayer.seekTo((int) startTime);
-                    Toast.makeText(getActivity(), "You have Jumped forward 5 seconds", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Cannot jump forward 5 seconds", Toast.LENGTH_SHORT).show();
-                }
+               int localpos=position-1;
+                x.execute(trackID[localpos]);
             }
         });
 
-        b4.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int temp = (int) startTime;
-
-                if ((temp - backwardTime) > 0) {
-                    startTime = startTime - backwardTime;
-                    mediaPlayer.seekTo((int) startTime);
-                    Toast.makeText(getActivity(), "You have Jumped backward 5 seconds", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Cannot jump backward 5 seconds", Toast.LENGTH_SHORT).show();
-                }
+                int localpos=position-1;
+                x.execute(trackID[localpos]);
             }
         });
         return rootView ;
@@ -214,7 +200,7 @@ public class MediaPlayerFragment extends Fragment {
 //            }catch (Exception e){
 //                Log.v("onpostexecute error",e.toString());
             try {
-                Picasso.with(getActivity()).load(tracks.album.images.get(0).url).into(iv);
+                Picasso.with(getActivity()).load(tracks.album.images.get(0).url).into(albumartImageView);
                 tx1.setText(tracks.album.name);
                 tx2.setText(tracks.name);
                 mediaPlayer.setDataSource(getActivity(), Uri.parse(tracks.preview_url));

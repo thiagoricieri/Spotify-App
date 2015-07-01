@@ -4,5 +4,7 @@
     tools:context="com.example.amr.spotifystreamer.ArtistTopTen">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/nowplaying" android:title="Now Playing"
+        android:orderInCategory="10" app:showAsAction="always"/>
 </menu>
 <!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/menu/menu_artist_top_ten.xml -->
