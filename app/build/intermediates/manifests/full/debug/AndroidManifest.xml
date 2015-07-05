@@ -53,6 +53,10 @@
         <provider
             android:name="com.example.amr.spotifystreamer.data.AppProvider"
             android:authorities="com.example.amr.spotifystreamer" />
+
+        <service
+            android:name="com.example.amr.spotifystreamer.MediaPlayBackService"
+            android:enabled="true" />
     </application>
 
 </manifest>

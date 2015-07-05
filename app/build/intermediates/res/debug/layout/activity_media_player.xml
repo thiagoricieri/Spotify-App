@@ -3,4 +3,4 @@
     android:name="com.example.amr.spotifystreamer.MediaPlayerFragment"
     tools:layout="@layout/fragment_media_player" android:layout_width="match_parent"
     android:layout_height="match_parent" />
-<!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/layout/activity_media_player.xml -->
+<!-- From: file:/home/amr/StudioProjects/Spotify-App/app/src/main/res/layout/activity_media_player.xml -->

@@ -5,4 +5,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/menu/menu_media_player.xml -->
+<!-- From: file:/home/amr/StudioProjects/Spotify-App/app/src/main/res/menu/menu_media_player.xml -->

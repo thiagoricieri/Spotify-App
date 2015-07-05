@@ -130,7 +130,7 @@ public class ArtistTopTenFragment extends Fragment {
             try
             {
                 artistID = params[0];
-                Log.v("Passed Id",artistID);
+//                Log.v("Passed Id",artistID);
                 Map<String, Object> options = new Hashtable<String, Object>();
                 options.put("country", "US"); //Replace here
                 Tracks tracksPager = spotify.getArtistTopTrack(this.artistID, options);
@@ -144,7 +144,7 @@ public class ArtistTopTenFragment extends Fragment {
             }catch (RetrofitError error)
             {
                 ErrorDetails details = SpotifyError.fromRetrofitError(error).getErrorDetails();
-                Log.i("deatils", "status " + details.status + ", message " + details.message);
+//                Log.i("deatils", "status " + details.status + ", message " + details.message);
 //                System.out.println(details.status + ":" + details.message);
             }
             return null;

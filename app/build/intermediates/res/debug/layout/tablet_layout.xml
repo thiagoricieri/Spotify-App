@@ -35,4 +35,4 @@
             android:id="@+id/toptenlist_portrait"
             android:layout_gravity="right" />
     </LinearLayout>
-    </LinearLayout><!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/layout/tablet_layout.xml -->
+    </LinearLayout><!-- From: file:/home/amr/StudioProjects/Spotify-App/app/src/main/res/layout/tablet_layout.xml -->

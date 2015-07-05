@@ -7,4 +7,4 @@
     <item android:id="@+id/nowplaying" android:title="Now Playing"
         android:orderInCategory="10" app:showAsAction="always"/>
 </menu>
-<!-- From: file:/C:/Users/Amr/Desktop/SpotifyStreamer/app/src/main/res/menu/menu_artist_top_ten.xml -->
+<!-- From: file:/home/amr/StudioProjects/Spotify-App/app/src/main/res/menu/menu_artist_top_ten.xml -->

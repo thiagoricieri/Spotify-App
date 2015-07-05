@@ -1,10 +1,17 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
-    android:name="com.example.amr.spotifystreamer.MainActivityFragment"
-    tools:layout="@layout/fragment_main" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-
-
-    />
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
+    <fragment android:id="@+id/headlines"
+        android:layout_height="fill_parent"
+        android:name="com.example.amr.spotifystreamer.MainActivityFragment"
+        android:layout_width="400dp"
+        android:layout_marginRight="10dp"
+        tools:layout="@layout/fragment_main" />
+    <fragment android:id="@+id/article"
+        android:layout_height="fill_parent"
+        android:name="com.example.amr.spotifystreamer.ArtistTopTenFragment"
+        android:layout_width="fill_parent"
+        tools:layout="@layout/fragment_artist_top_ten" />
+</LinearLayout>

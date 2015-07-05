@@ -86,13 +86,14 @@ public class MainActivityFragment extends Fragment  {
                     Artist me = (Artist) dataAdabter.getItem(position);
                     ArtistTopTenFragment.artistID=me.id;
                     if(MainActivity.screenWidth > MainActivity.screenHeight){
-                        getFragmentManager().beginTransaction().add(R.id.toptenfragment,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
+                        getFragmentManager().beginTransaction().add(R.id.fragment ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 
                     }
                     else {
-
-
-                        Log.v("Land","por");
+//                        getFragmentManager().beginTransaction().replace(R.id.toptenfragment ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
+//
+//
+//                        Log.v("Land","por");
    Intent intent = new Intent(getActivity(), ArtistTopTen.class);
                         Log.v("Artist", me.id);
                         startActivity(intent);
@@ -156,8 +157,6 @@ public class MainActivityFragment extends Fragment  {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             super.onPostExecute(artists);
-            Log.v("Artists List", artists.toString());
-            Log.v("Artist", artists.get(0).name);
             Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
 int counter=0;
             for(Artist local:artists) {

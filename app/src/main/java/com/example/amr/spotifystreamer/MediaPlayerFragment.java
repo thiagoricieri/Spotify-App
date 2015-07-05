@@ -37,7 +37,7 @@ import retrofit.RetrofitError;
  * A placeholder fragment containing a simple view.
  */
 public class MediaPlayerFragment extends Fragment {
-    MediaPlayer mediaPlayer = new MediaPlayer();
+//    MediaPlayer mediaPlayer = new MediaPlayer();
 
     private Button previousButton, pauseButton, playButton, nextButton;
     private ImageView albumartImageView;
@@ -56,7 +56,7 @@ String[] trackID;
     Tracks topten;
     int position;
     public static int oneTimeOnly = 0;
-
+    MediaPlayBackService Playservice;
     public MediaPlayerFragment() {
     }
 
@@ -65,6 +65,7 @@ String[] trackID;
                              Bundle savedInstanceState) {
         final getSongTask x=new getSongTask();
 
+
         position=0;
         View rootView = inflater.inflate(R.layout.fragment_media_player, container, false);
         Intent intent=getActivity().getIntent();
@@ -72,9 +73,8 @@ String[] trackID;
 
 
          x.execute(songID);
+        Playservice=new MediaPlayBackService();
 
-
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         previousButton = (Button) rootView.findViewById(R.id.previosButton);
         pauseButton = (Button) rootView.findViewById(R.id.pauseButton);
         playButton = (Button) rootView.findViewById(R.id.playButton);
@@ -94,10 +94,9 @@ String[] trackID;
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Playing sound", Toast.LENGTH_SHORT).show();
-                mediaPlayer.start();
-
-                finalTime = mediaPlayer.getDuration();
-                startTime = mediaPlayer.getCurrentPosition();
+                Playservice.PlayMusic();
+                finalTime = Playservice.getDuration();
+                startTime = Playservice.getCurrentPosition();
 
                 if (oneTimeOnly == 0) {
                     seekbar.setMax((int) finalTime);
@@ -121,7 +120,7 @@ String[] trackID;
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Pausing sound", Toast.LENGTH_SHORT).show();
-                mediaPlayer.pause();
+Playservice.pauseMusic();
                 pauseButton.setEnabled(false);
                 playButton.setEnabled(true);
             }
@@ -147,7 +146,7 @@ String[] trackID;
 
         private Runnable UpdateSongTime = new Runnable() {
             public void run() {
-                startTime = mediaPlayer.getCurrentPosition();
+                startTime = Playservice.getCurrentPosition();
                 tx3.setText(String.format("%d min, %d sec",
 
                                 TimeUnit.MILLISECONDS.toMinutes((long) startTime),
@@ -192,32 +191,16 @@ String[] trackID;
         protected void onPostExecute(Track tracks) {
             super.onPostExecute(tracks);
 
-//            try {
-//                Log.v("Tracks List", tracks.toString());
-//                dataAdabter = new CustomListTopTen(getActivity(), (ArrayList<Track>) tracks);
-//                resultList.setAdapter(dataAdabter);
-//                Log.v("1", "0");
-//            }catch (Exception e){
-//                Log.v("onpostexecute error",e.toString());
             try {
                 Picasso.with(getActivity()).load(tracks.album.images.get(0).url).into(albumartImageView);
                 tx1.setText(tracks.album.name);
                 tx2.setText(tracks.name);
-                mediaPlayer.setDataSource(getActivity(), Uri.parse(tracks.preview_url));
-                mediaPlayer.prepare();
-//                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                    @Override
-//                    public void onPrepared(MediaPlayer mp) {
-//                        mp.start();
-//                    }
-//                });
-            } catch (IOException e) {
+                Playservice.songURL=tracks.preview_url;
+Playservice.initMusicPlayer();
+            } catch (Exception e) {
                 Log.v("Playback error",e.toString());
             }
-
-//            mediaPlayer.start();
             Log.v("URI Song", tracks.preview_url);
-// }
         }
     }
 
