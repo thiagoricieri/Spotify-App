@@ -85,7 +85,7 @@ public class ArtistTopTenFragment extends Fragment {
         spotifyTopTrackQueryParams = new Hashtable<>();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String countryCode = preferences.getString(getString(R.string.country_pref_key), getString(R.string.country_pref_default_value));
-
+//        container.removeAllViews();
         resultList= (ListView) rootview.findViewById(R.id.topTenlistView);
         toptenTask=new TopTenTask();
         toptenTask.execute(artistID);

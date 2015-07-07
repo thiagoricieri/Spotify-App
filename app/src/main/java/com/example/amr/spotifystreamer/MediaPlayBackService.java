@@ -14,8 +14,9 @@ import java.io.IOException;
 
 public class MediaPlayBackService extends Service implements android.media.MediaPlayer.OnPreparedListener,
         android.media.MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener{
-    MediaPlayer player;
-    String songURL;
+    static MediaPlayer player=new MediaPlayer();
+    static String songURL;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -36,53 +37,90 @@ public class MediaPlayBackService extends Service implements android.media.Media
     public void onCompletion(MediaPlayer mp) {
 
     }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        player=new MediaPlayer();
+
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+
+        player.setWakeMode(this,
+                PowerManager.PARTIAL_WAKE_LOCK);
+        player.setOnPreparedListener(this);
+        player.setOnCompletionListener(this);
+        player.setOnErrorListener(this);
+        try {
+            initMusicPlayer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     public void onCreate(){
         super.onCreate();
         player=new MediaPlayer();
+
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+
+
+        player.setOnPreparedListener(this);
+        player.setOnCompletionListener(this);
+        player.setOnErrorListener(this);
         try {
             initMusicPlayer();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void setSong(String url){
-        this.songURL=url;
+    public void onStop(){
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        player.release();
+        super.onDestroy();
+    }
+
+    static public void setSong(String url){
+        songURL=url;
     }
     public class MusicBinder extends Binder {
-         MediaPlayBackService getService(){
+        MediaPlayBackService getService(){
             return MediaPlayBackService.this;
         }
     }
-    public void PlayMusic(){
+    public static void PlayMusic() throws IOException {
+
         player.start();
     }
-    public int getDuration(){
-     return   player.getDuration();
+    public static int getDuration(){
+        return   player.getDuration();
     }
-    public int getCurrentPosition(){
+    public static int getCurrentPosition(){
         return player.getCurrentPosition();
     }
-    public void pauseMusic(){
+    public static void pauseMusic(){
         player.pause();
     }
-    public void initMusicPlayer() throws IOException {
-        player=new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        player.setWakeMode(getApplicationContext(),
-                PowerManager.PARTIAL_WAKE_LOCK);
-        player.setOnPreparedListener(this);
-        player.setOnCompletionListener(this);
-        player.setOnErrorListener(this);
-        Log.v("I am here", songURL);
-        player.setDataSource(getApplicationContext(), Uri.parse(songURL));
+    public  void initMusicPlayer() throws IOException {
 
-        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                player.start();
-            }
-        });
+        player.setDataSource(this, Uri.parse(songURL));
         player.prepareAsync();
+        Log.v("I am here", songURL);
+//
+//        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                mp.start();
+//            }
+//        });
+
 
     }
 }
+

@@ -86,17 +86,17 @@ public class MainActivityFragment extends Fragment  {
                     Artist me = (Artist) dataAdabter.getItem(position);
                     ArtistTopTenFragment.artistID=me.id;
                     if(MainActivity.screenWidth > MainActivity.screenHeight){
-                        getFragmentManager().beginTransaction().add(R.id.fragment ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
+                        getFragmentManager().beginTransaction().add(R.id.title ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 
                     }
                     else {
-//                        getFragmentManager().beginTransaction().replace(R.id.toptenfragment ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
+                        getFragmentManager().beginTransaction().replace(R.id.headlines ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 //
 //
 //                        Log.v("Land","por");
-   Intent intent = new Intent(getActivity(), ArtistTopTen.class);
-                        Log.v("Artist", me.id);
-                        startActivity(intent);
+//   Intent intent = new Intent(getActivity(), ArtistTopTen.class);
+//                        Log.v("Artist", me.id);
+//                        startActivity(intent);
                     }
             }catch (Exception e){
                     Log.v("Starting new intent ",e.toString());
@@ -157,15 +157,18 @@ public class MainActivityFragment extends Fragment  {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             super.onPostExecute(artists);
-            Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
+//            Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
 int counter=0;
-            for(Artist local:artists) {
-addArtist(local.id,local.name, local.images.toString());
-                  }
-            dataAdabter= new CustomList(getActivity(),(ArrayList<Artist>)artists);
-            resultList.setAdapter(dataAdabter);
-            Log.v("1", "0");
-
+//            for(Artist local:artists) {
+//addArtist(local.id,local.name, local.images.toString());
+//                  }
+try {
+    dataAdabter = new CustomList(getActivity(), (ArrayList<Artist>) artists);
+    resultList.setAdapter(dataAdabter);
+    Log.v("1", "0");
+}catch (Exception e){
+    Log.v("array not yet ",e.toString());
+}
         }
     }
     void addArtist(String artistID, String artistName, String artistImage) {

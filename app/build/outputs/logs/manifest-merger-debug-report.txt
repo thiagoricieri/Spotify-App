@@ -21,6 +21,10 @@ uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from AndroidManifest.xml:6:5
 	android:name
 		ADDED from AndroidManifest.xml:6:22
+uses-permission#android.permission.WAKE_LOCK
+ADDED from AndroidManifest.xml:7:5
+	android:name
+		ADDED from AndroidManifest.xml:7:22
 application
 ADDED from AndroidManifest.xml:8:5
 MERGED from :spotify-web-api-android-0.1.0::7:5
@@ -53,39 +57,39 @@ ADDED from AndroidManifest.xml:20:17
 	android:name
 		ADDED from AndroidManifest.xml:20:27
 activity#com.example.amr.spotifystreamer.ArtistTopTen
-ADDED from AndroidManifest.xml:23:9
+ADDED from AndroidManifest.xml:26:9
 	android:label
-		ADDED from AndroidManifest.xml:25:13
+		ADDED from AndroidManifest.xml:28:13
 	android:parentActivityName
-		ADDED from AndroidManifest.xml:26:13
+		ADDED from AndroidManifest.xml:29:13
 	android:name
-		ADDED from AndroidManifest.xml:24:13
+		ADDED from AndroidManifest.xml:27:13
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from AndroidManifest.xml:27:13
+ADDED from AndroidManifest.xml:30:13
 	android:value
-		ADDED from AndroidManifest.xml:29:17
+		ADDED from AndroidManifest.xml:32:17
 	android:name
-		ADDED from AndroidManifest.xml:28:17
+		ADDED from AndroidManifest.xml:31:17
 activity#com.example.amr.spotifystreamer.MediaPlayer
-ADDED from AndroidManifest.xml:31:9
+ADDED from AndroidManifest.xml:37:9
 	android:label
-		ADDED from AndroidManifest.xml:33:13
+		ADDED from AndroidManifest.xml:39:13
 	android:launchMode
-		ADDED from AndroidManifest.xml:34:13
+		ADDED from AndroidManifest.xml:40:13
 	android:name
-		ADDED from AndroidManifest.xml:32:13
+		ADDED from AndroidManifest.xml:38:13
 provider#com.example.amr.spotifystreamer.data.AppProvider
-ADDED from AndroidManifest.xml:40:9
+ADDED from AndroidManifest.xml:47:9
 	android:authorities
-		ADDED from AndroidManifest.xml:41:13
+		ADDED from AndroidManifest.xml:48:13
 	android:name
-		ADDED from AndroidManifest.xml:42:13
+		ADDED from AndroidManifest.xml:49:13
 service#com.example.amr.spotifystreamer.MediaPlayBackService
-ADDED from AndroidManifest.xml:43:1
+ADDED from AndroidManifest.xml:50:1
 	android:enabled
-		ADDED from AndroidManifest.xml:43:47
+		ADDED from AndroidManifest.xml:50:47
 	android:name
-		ADDED from AndroidManifest.xml:43:10
+		ADDED from AndroidManifest.xml:50:10
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5

@@ -1,5 +1,9 @@
 package com.example.amr.spotifystreamer;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -73,7 +77,7 @@ String[] trackID;
 
 
          x.execute(songID);
-        Playservice=new MediaPlayBackService();
+
 
         previousButton = (Button) rootView.findViewById(R.id.previosButton);
         pauseButton = (Button) rootView.findViewById(R.id.pauseButton);
@@ -94,9 +98,13 @@ String[] trackID;
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Playing sound", Toast.LENGTH_SHORT).show();
-                Playservice.PlayMusic();
-                finalTime = Playservice.getDuration();
-                startTime = Playservice.getCurrentPosition();
+                try {
+                    MediaPlayBackService.PlayMusic();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                finalTime = MediaPlayBackService.getDuration();
+                startTime = MediaPlayBackService.getCurrentPosition();
 
                 if (oneTimeOnly == 0) {
                     seekbar.setMax((int) finalTime);
@@ -120,7 +128,7 @@ String[] trackID;
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Pausing sound", Toast.LENGTH_SHORT).show();
-Playservice.pauseMusic();
+MediaPlayBackService.pauseMusic();
                 pauseButton.setEnabled(false);
                 playButton.setEnabled(true);
             }
@@ -143,10 +151,9 @@ Playservice.pauseMusic();
         });
         return rootView ;
     }
-
         private Runnable UpdateSongTime = new Runnable() {
             public void run() {
-                startTime = Playservice.getCurrentPosition();
+                startTime = MediaPlayBackService.getCurrentPosition();
                 tx3.setText(String.format("%d min, %d sec",
 
                                 TimeUnit.MILLISECONDS.toMinutes((long) startTime),
@@ -176,14 +183,14 @@ Playservice.pauseMusic();
                 songID = params[0];
                 Log.v("Passed Somng Id", songID);
                 Track mytrack = spotify.getTrack(songID);
-
+                Intent newintent=new Intent(getActivity(),MediaPlayBackService.class);
+                getActivity().stopService(newintent);
 
                 return mytrack;
             }catch (RetrofitError error)
             {
                 ErrorDetails details = SpotifyError.fromRetrofitError(error).getErrorDetails();
                 Log.i("deatils", "status " + details.status + ", message " + details.message);
-//                System.out.println(details.status + ":" + details.message);
             }
             return null;
         }
@@ -195,12 +202,12 @@ Playservice.pauseMusic();
                 Picasso.with(getActivity()).load(tracks.album.images.get(0).url).into(albumartImageView);
                 tx1.setText(tracks.album.name);
                 tx2.setText(tracks.name);
-                Playservice.songURL=tracks.preview_url;
-Playservice.initMusicPlayer();
+                MediaPlayBackService.setSong(tracks.preview_url);
+                Intent newintent=new Intent(getActivity(),MediaPlayBackService.class);
+                getActivity().startService(newintent);
             } catch (Exception e) {
                 Log.v("Playback error",e.toString());
             }
-            Log.v("URI Song", tracks.preview_url);
         }
     }
 
