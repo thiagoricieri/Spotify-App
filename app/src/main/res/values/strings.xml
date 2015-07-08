@@ -8,5 +8,7 @@
     <string name="country_pref_dialog_title">Your Country</string>
     <string name="country_pref_key">pref_country_code</string>
     <string name="country_pref_default_value">FR</string>
+    <string name="title_artist_list">Artists</string>
+    <string name="title_artist_detail">Artist Detail</string>
 
 </resources>

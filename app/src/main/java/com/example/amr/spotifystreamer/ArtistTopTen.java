@@ -39,8 +39,8 @@ public class ArtistTopTen extends ActionBarActivity {
         }
 
         if(id==R.id.nowplaying){
-            Intent local= new Intent(getApplicationContext(),MediaPlayer.class);
-            startActivity(local);
+            Intent local= new Intent(getApplicationContext(),MediaPlayBackService.class);
+            getApplicationContext().startService(local);
         }
 
         return super.onOptionsItemSelected(item);

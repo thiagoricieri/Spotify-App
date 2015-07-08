@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +20,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -30,6 +32,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.amr.spotifystreamer.MainActivity" />
+
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -37,22 +40,22 @@
         <activity
             android:name=".MediaPlayer"
             android:label="Media Player"
-            android:launchMode="singleInstance"
-            >
+            android:launchMode="singleInstance" >
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.WAKE_LOCK" />
-
         </activity>
+
         <provider
-            android:authorities="com.example.amr.spotifystreamer"
-            android:name=".data.AppProvider" />
-<service android:name=".MediaPlayBackService" android:enabled="true">
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+            android:name=".data.AppProvider"
+            android:authorities="com.example.amr.spotifystreamer" />
 
+        <service
+            android:name=".MediaPlayBackService"
+            android:enabled="true" >
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+        </service>
 
-</service>
     </application>
-
 
 </manifest>

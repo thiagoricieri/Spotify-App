@@ -212,6 +212,8 @@
     <eat-comment/>
     <string name="title_activity_artist_top_ten">Artist Top Ten</string>
     <string name="title_activity_media_player">Media Player</string>
+    <string name="title_artist_detail">Artist Detail</string>
+    <string name="title_artist_list">Artists</string>
     <!-- From: file:/home/amr/StudioProjects/Spotify-App/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

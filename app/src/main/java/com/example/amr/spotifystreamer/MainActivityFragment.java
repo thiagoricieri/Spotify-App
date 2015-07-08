@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
@@ -72,10 +73,11 @@ public class MainActivityFragment extends Fragment  {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootview=inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootview=inflater.inflate(R.layout.fragment_main, container, false);
+
         resultList= (ListView) rootview.findViewById(R.id.resultList);
         resultList.setAdapter(dataAdabter);
         final EditText searchText=((EditText)rootview.findViewById(R.id.searchBar));
@@ -85,19 +87,19 @@ public class MainActivityFragment extends Fragment  {
                 try{
                     Artist me = (Artist) dataAdabter.getItem(position);
                     ArtistTopTenFragment.artistID=me.id;
-                    if(MainActivity.screenWidth > MainActivity.screenHeight){
-                        getFragmentManager().beginTransaction().add(R.id.title ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        getFragmentManager().beginTransaction().add(R.id.trackcontain,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 
                     }
-                    else {
-                        getFragmentManager().beginTransaction().replace(R.id.headlines ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
+
+//                        getFragmentManager().beginTransaction().replace(R.id.headlines ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 //
 //
 //                        Log.v("Land","por");
-//   Intent intent = new Intent(getActivity(), ArtistTopTen.class);
-//                        Log.v("Artist", me.id);
-//                        startActivity(intent);
-                    }
+   Intent intent = new Intent(getActivity(), ArtistTopTen.class);
+                        Log.v("Artist", me.id);
+                        startActivity(intent);
+//                    }
             }catch (Exception e){
                     Log.v("Starting new intent ",e.toString());
                 }
