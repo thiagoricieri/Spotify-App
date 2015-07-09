@@ -42,7 +42,7 @@ import retrofit.RetrofitError;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MediaPlayerFragment extends Fragment {
+public class MediaPlayerFragment extends DialogFragment {
 
     private Button previousButton, pauseButton, playButton, nextButton;
     private ImageView albumartImageView;

@@ -42,6 +42,7 @@
         </activity>
         <activity
             android:name="com.example.amr.spotifystreamer.ArtistTopTen"
+            android:configChanges="orientation|screenSize"
             android:label="Top Ten Tracks"
             android:parentActivityName="com.example.amr.spotifystreamer.MainActivity" >
             <meta-data

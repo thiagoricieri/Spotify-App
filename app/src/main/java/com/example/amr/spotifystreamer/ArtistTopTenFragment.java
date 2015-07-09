@@ -2,6 +2,7 @@ package com.example.amr.spotifystreamer;
 
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -99,12 +100,16 @@ public class ArtistTopTenFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Track me=(Track) dataAdabter.getItem(position);
-                    newintent=new Intent(getActivity(),MediaPlayer.class);
                     MediaPlayerFragment.pos=position;
+                    if(getResources().getConfiguration().orientation==getResources().getConfiguration().ORIENTATION_LANDSCAPE){
+                        DialogFragment newdialog=new MediaPlayerFragment();
+                        newdialog.show(getActivity().getFragmentManager(),"Media Player");
+                    }else {
 
+                        newintent=new Intent(getActivity(),MediaPlayer.class);
 
-
-                    startActivity(newintent);
+                        startActivity(newintent);
+                    }
                 } catch (Exception e) {
 
                 }
