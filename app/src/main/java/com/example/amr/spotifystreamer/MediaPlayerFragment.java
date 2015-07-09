@@ -72,7 +72,8 @@ public class MediaPlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final getSongTask x=new getSongTask();
-
+        Intent newintent=new Intent(getActivity(),MediaPlayBackService.class);
+        getActivity().stopService(newintent);
 
         position=0;
         View rootView = inflater.inflate(R.layout.fragment_media_player, container, false);

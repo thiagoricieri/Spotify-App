@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -60,7 +61,7 @@ public class MainActivityFragment extends Fragment  {
 
      static boolean mTwoPane;
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-
+    static ArrayList<Artist> savedArtist;
 
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
@@ -77,6 +78,7 @@ public class MainActivityFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         final View rootview=inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -136,11 +138,13 @@ public class MainActivityFragment extends Fragment  {
 
         }
     });
+        setRetainInstance(true);
 
 
         return rootview;
 
     }
+
     class searchArtist extends AsyncTask<String, Void, List<Artist>>{
         String search;
 
@@ -170,13 +174,10 @@ public class MainActivityFragment extends Fragment  {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             super.onPostExecute(artists);
-           Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
-int counter=0;
-            for(Artist local:artists) {
-addArtist(local.id,local.name, local.images.toString());
-                  }
+
 try {
-    dataAdabter = new CustomList(getActivity(), (ArrayList<Artist>) artists);
+    savedArtist=(ArrayList<Artist>) artists;
+    dataAdabter = new CustomList(getActivity(), (savedArtist));
     resultList.setAdapter(dataAdabter);
     Log.v("1", "0");
 }catch (Exception e){

@@ -1,5 +1,6 @@
 package com.example.amr.spotifystreamer;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -39,8 +40,11 @@ public class ArtistTopTen extends ActionBarActivity {
         }
 
         if(id==R.id.nowplaying){
-            Intent local= new Intent(getApplicationContext(),MediaPlayBackService.class);
-            getApplicationContext().startService(local);
+            Intent intent = new Intent(getApplication(), MediaPlayer.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+//PendingIntent.getActivity(getBaseContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT).notify();
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
