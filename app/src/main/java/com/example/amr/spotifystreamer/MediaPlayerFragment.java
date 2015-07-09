@@ -3,6 +3,7 @@ package com.example.amr.spotifystreamer;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -26,6 +27,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
@@ -41,7 +43,6 @@ import retrofit.RetrofitError;
  * A placeholder fragment containing a simple view.
  */
 public class MediaPlayerFragment extends Fragment {
-//    MediaPlayer mediaPlayer = new MediaPlayer();
 
     private Button previousButton, pauseButton, playButton, nextButton;
     private ImageView albumartImageView;
@@ -49,7 +50,8 @@ public class MediaPlayerFragment extends Fragment {
     private double finalTime = 0;
     private Handler myHandler = new Handler();
     String songID;
-String[] trackID;
+    static public List<Track> trackID;
+    static public int pos;
     SpotifyApi api=new SpotifyApi();
     SpotifyService spotify = api.getService();
     private int forwardTime = 5000;
@@ -60,6 +62,8 @@ String[] trackID;
     Tracks topten;
     int position;
     public static int oneTimeOnly = 0;
+    int px=1;
+    int nx=1;
     MediaPlayBackService Playservice;
     public MediaPlayerFragment() {
     }
@@ -73,10 +77,9 @@ String[] trackID;
         position=0;
         View rootView = inflater.inflate(R.layout.fragment_media_player, container, false);
         Intent intent=getActivity().getIntent();
-        songID=intent.getStringExtra("IDs");
+        songID=trackID.get(pos).id;
 
-
-         x.execute(songID);
+        x.execute(songID);
 
 
         previousButton = (Button) rootView.findViewById(R.id.previosButton);
@@ -128,7 +131,7 @@ String[] trackID;
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Pausing sound", Toast.LENGTH_SHORT).show();
-MediaPlayBackService.pauseMusic();
+                MediaPlayBackService.pauseMusic();
                 pauseButton.setEnabled(false);
                 playButton.setEnabled(true);
             }
@@ -137,34 +140,62 @@ MediaPlayBackService.pauseMusic();
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               int localpos=position-1;
-                x.execute(trackID[localpos]);
+                position--;
+                try{
+                Intent newintent=new Intent(getActivity(),MediaPlayBackService.class);
+                getActivity().stopService(newintent);
+
+                getSongTask mtask=new getSongTask();
+                        mtask.execute(trackID.get(position).id);}
+                catch (Exception e){
+                    Toast.makeText(getActivity(),"No Previous Songs",Toast.LENGTH_LONG).show();
+                    Intent newintent = new Intent(getActivity(), MediaPlayBackService.class);
+                    getActivity().startService(newintent);
+                }
+                position++;
+                playButton.setEnabled(true);
             }
         });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int localpos=position-1;
-                x.execute(trackID[localpos]);
+position++;
+
+try {
+    Intent newintent = new Intent(getActivity(), MediaPlayBackService.class);
+    getActivity().stopService(newintent);
+
+    getSongTask mtask = new getSongTask();
+    mtask.execute(trackID.get(position).id);
+}catch (Exception e){
+    Toast.makeText(getActivity(),"No more Tracks Avaliable",Toast.LENGTH_LONG).show();
+    Intent newintent = new Intent(getActivity(), MediaPlayBackService.class);
+    getActivity().startService(newintent);
+}
+                playButton.setEnabled(true);
             }
         });
         return rootView ;
     }
-        private Runnable UpdateSongTime = new Runnable() {
-            public void run() {
-                startTime = MediaPlayBackService.getCurrentPosition();
-                tx3.setText(String.format("%d min, %d sec",
+    private Runnable UpdateSongTime = new Runnable() {
+        public void run() {
+         try {
+             startTime = MediaPlayBackService.getCurrentPosition();
+         }catch (Exception e){
 
-                                TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                                TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                                toMinutes((long) startTime)))
-                );
-                seekbar.setProgress((int)startTime);
-                myHandler.postDelayed(this, 100);
-            }
-        };
+         }
+             tx3.setText(String.format("%d min, %d sec",
+
+                            TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+                            TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+                                            toMinutes((long) startTime)))
+            );
+            seekbar.setProgress((int)startTime);
+            myHandler.postDelayed(this, 100);
+        }
+    };
 
 
     class getSongTask extends AsyncTask<String, Void, Track> {
@@ -183,8 +214,6 @@ MediaPlayBackService.pauseMusic();
                 songID = params[0];
                 Log.v("Passed Somng Id", songID);
                 Track mytrack = spotify.getTrack(songID);
-                Intent newintent=new Intent(getActivity(),MediaPlayBackService.class);
-                getActivity().stopService(newintent);
 
                 return mytrack;
             }catch (RetrofitError error)
@@ -197,6 +226,7 @@ MediaPlayBackService.pauseMusic();
         @Override
         protected void onPostExecute(Track tracks) {
             super.onPostExecute(tracks);
+
 
             try {
                 Picasso.with(getActivity()).load(tracks.album.images.get(0).url).into(albumartImageView);
@@ -211,5 +241,4 @@ MediaPlayBackService.pauseMusic();
         }
     }
 
-    }
-
+}

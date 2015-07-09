@@ -85,7 +85,6 @@ public class ArtistTopTenFragment extends Fragment {
         spotifyTopTrackQueryParams = new Hashtable<>();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String countryCode = preferences.getString(getString(R.string.country_pref_key), getString(R.string.country_pref_default_value));
-//        container.removeAllViews();
         resultList= (ListView) rootview.findViewById(R.id.topTenlistView);
         toptenTask=new TopTenTask();
         toptenTask.execute(artistID);
@@ -100,12 +99,11 @@ public class ArtistTopTenFragment extends Fragment {
                 try {
                     Track me=(Track) dataAdabter.getItem(position);
                     newintent=new Intent(getActivity(),MediaPlayer.class);
+                    MediaPlayerFragment.pos=position;
 
-                    newintent.putExtra("IDs",me.id);
 
 
                     startActivity(newintent);
-
                 } catch (Exception e) {
 
                 }
@@ -158,6 +156,7 @@ public class ArtistTopTenFragment extends Fragment {
      addArtist(x.id,x.name,x.album.name,x.album.images.get(0).url);
  }
                 dataAdabter = new CustomListTopTen(getActivity(), (ArrayList<Track>) tracks);
+                MediaPlayerFragment.trackID=tracks;
                 resultList.setAdapter(dataAdabter);
                 Log.v("1", "0");
             }catch (Exception e){

@@ -37,19 +37,19 @@
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.WAKE_LOCK" />
         </activity>
-        <activity
-            android:name=".MediaPlayer"
-            android:label="Media Player"
-            android:launchMode="singleInstance" >
-            <uses-permission android:name="android.permission.INTERNET" />
-            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-            <uses-permission android:name="android.permission.WAKE_LOCK" />
-        </activity>
 
         <provider
             android:name=".data.AppProvider"
             android:authorities="com.example.amr.spotifystreamer" />
+        <activity
+            android:name=".MediaPlayer"
+            android:label="Media Player"
+            android:launchMode="singleInstance" >
 
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+        </activity>
         <service
             android:name=".MediaPlayBackService"
             android:enabled="true" >

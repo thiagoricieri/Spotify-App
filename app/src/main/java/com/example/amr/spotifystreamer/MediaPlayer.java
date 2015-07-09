@@ -1,5 +1,8 @@
 package com.example.amr.spotifystreamer;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +10,7 @@ import android.view.MenuItem;
 
 
 public class MediaPlayer extends ActionBarActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

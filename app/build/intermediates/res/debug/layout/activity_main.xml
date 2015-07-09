@@ -1,22 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal"
-    android:id="@+id/mylist"
-    android:clickable="true" >
-
-    <FrameLayout
-        android:id="@+id/artistcontain"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"></FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/trackcontain"
-
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"></FrameLayout>
-</LinearLayout>
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
+    android:name="com.example.amr.spotifystreamer.MainActivityFragment"
+    tools:layout="@layout/fragment_main" android:layout_width="fill_parent"
+    android:layout_height="fill_parent" />
 <!-- From: file:/home/amr/StudioProjects/Spotify-App/app/src/main/res/layout/activity_main.xml -->

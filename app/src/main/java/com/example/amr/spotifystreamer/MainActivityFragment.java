@@ -58,6 +58,8 @@ public class MainActivityFragment extends Fragment  {
     static final int COL_ALBUM_NAME = 2;
     static final int COL_ALBUM_IMAGE = 3;
 
+     static boolean mTwoPane;
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 
     SpotifyApi api=new SpotifyApi();
@@ -87,19 +89,28 @@ public class MainActivityFragment extends Fragment  {
                 try{
                     Artist me = (Artist) dataAdabter.getItem(position);
                     ArtistTopTenFragment.artistID=me.id;
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        getFragmentManager().beginTransaction().add(R.id.trackcontain,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
 
+                    if (mTwoPane) {
+                        // In two-pane mode, show the detail view in this activity by
+                        // adding or replacing the detail fragment using a
+                        // fragment transaction.
+                        Bundle arguments = new Bundle();
+                        arguments.putString(ArtistTopTenFragment.artistID, me.id);
+                        ArtistTopTenFragment fragment = new ArtistTopTenFragment();
+                        fragment.setArguments(arguments);
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.artist_detail_container, fragment)
+                                .commit();
+
+                    } else {
+                        // In single-pane mode, simply start the detail activity
+                        // for the selected item ID.
+                        Intent detailIntent = new Intent(getActivity(), ArtistTopTen.class);
+                        detailIntent.putExtra(ArtistTopTenFragment.artistID, id);
+                        startActivity(detailIntent);
                     }
 
-//                        getFragmentManager().beginTransaction().replace(R.id.headlines ,new ArtistTopTenFragment(), "Top Ten Fragment").commit();
-//
-//
-//                        Log.v("Land","por");
-   Intent intent = new Intent(getActivity(), ArtistTopTen.class);
-                        Log.v("Artist", me.id);
-                        startActivity(intent);
-//                    }
+
             }catch (Exception e){
                     Log.v("Starting new intent ",e.toString());
                 }
@@ -159,11 +170,11 @@ public class MainActivityFragment extends Fragment  {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             super.onPostExecute(artists);
-//            Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
+           Vector<ContentValues> cv = new Vector<ContentValues>(artists.size());
 int counter=0;
-//            for(Artist local:artists) {
-//addArtist(local.id,local.name, local.images.toString());
-//                  }
+            for(Artist local:artists) {
+addArtist(local.id,local.name, local.images.toString());
+                  }
 try {
     dataAdabter = new CustomList(getActivity(), (ArrayList<Artist>) artists);
     resultList.setAdapter(dataAdabter);

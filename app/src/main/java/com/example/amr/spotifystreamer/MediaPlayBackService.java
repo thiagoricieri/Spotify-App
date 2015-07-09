@@ -74,6 +74,7 @@ public class MediaPlayBackService extends Service implements android.media.Media
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
     public void onStop(){
 
@@ -111,14 +112,8 @@ public class MediaPlayBackService extends Service implements android.media.Media
 
         player.setDataSource(this, Uri.parse(songURL));
         player.prepareAsync();
+
         Log.v("I am here", songURL);
-//
-//        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mp) {
-//                mp.start();
-//            }
-//        });
 
 
     }
