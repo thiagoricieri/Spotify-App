@@ -30,6 +30,7 @@
         <activity
             android:name=".ArtistTopTen"
             android:label="Top Ten Tracks"
+            android:configChanges="orientation|screenSize"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

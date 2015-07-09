@@ -29,6 +29,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.amr.spotifystreamer.data.AppContract.*;
 import com.example.amr.spotifystreamer.data.AppDbHelper;
 import com.example.amr.spotifystreamer.data.AppProvider;
@@ -174,6 +176,9 @@ public class MainActivityFragment extends Fragment  {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             super.onPostExecute(artists);
+            if(artists.isEmpty()){
+                Toast.makeText(getActivity(),"No artist found",Toast.LENGTH_LONG).show();
+            }
 
 try {
     savedArtist=(ArrayList<Artist>) artists;

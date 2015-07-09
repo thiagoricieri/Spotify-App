@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.amr.spotifystreamer.data.AppContract;
 import com.squareup.picasso.Picasso;
@@ -110,7 +111,7 @@ public class ArtistTopTenFragment extends Fragment {
 
             }
         });
-
+setRetainInstance(true);
         return rootview;
 
     }
@@ -150,6 +151,9 @@ public class ArtistTopTenFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Track> tracks) {
             super.onPostExecute(tracks);
+            if(tracks.isEmpty()){
+                Toast.makeText(getActivity(),"No tracks found",Toast.LENGTH_LONG).show();
+            }
             try {
                 Log.v("Tracks List", tracks.toString());
  for(Track x:tracks){
