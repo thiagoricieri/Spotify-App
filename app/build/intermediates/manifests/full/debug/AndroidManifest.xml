@@ -27,7 +27,6 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.amr.spotifystreamer.MainActivity"
-            android:configChanges="orientation|screenSize"
             android:label="Spotify Streamer"
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
@@ -42,7 +41,7 @@
         </activity>
         <activity
             android:name="com.example.amr.spotifystreamer.ArtistTopTen"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="orientation"
             android:label="Top Ten Tracks"
             android:parentActivityName="com.example.amr.spotifystreamer.MainActivity" >
             <meta-data

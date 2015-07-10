@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".MainActivity"
             android:label="Spotify Streamer"
             android:windowSoftInputMode="stateHidden" >
@@ -30,7 +29,7 @@
         <activity
             android:name=".ArtistTopTen"
             android:label="Top Ten Tracks"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="orientation"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

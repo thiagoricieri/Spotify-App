@@ -81,9 +81,7 @@ public class MainActivityFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         final View rootview=inflater.inflate(R.layout.fragment_main, container, false);
-
         resultList= (ListView) rootview.findViewById(R.id.resultList);
         resultList.setAdapter(dataAdabter);
         final EditText searchText=((EditText)rootview.findViewById(R.id.searchBar));
@@ -147,6 +145,13 @@ public class MainActivityFragment extends Fragment  {
 
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setRetainInstance(true);
+
+    }
+
     class searchArtist extends AsyncTask<String, Void, List<Artist>>{
         String search;
 
@@ -176,11 +181,12 @@ public class MainActivityFragment extends Fragment  {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             super.onPostExecute(artists);
+            try {
+
             if(artists.isEmpty()){
                 Toast.makeText(getActivity(),"No artist found",Toast.LENGTH_LONG).show();
             }
 
-try {
     savedArtist=(ArrayList<Artist>) artists;
     dataAdabter = new CustomList(getActivity(), (savedArtist));
     resultList.setAdapter(dataAdabter);
