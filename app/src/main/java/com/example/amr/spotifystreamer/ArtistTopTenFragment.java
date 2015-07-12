@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
@@ -79,11 +80,8 @@ public class ArtistTopTenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootview=inflater.inflate(R.layout.fragment_artist_top_ten, container, false);
         Intent intent = getActivity().getIntent();
-//        artistID=intent.getStringExtra("ar");
-//        Log.v("artist ID",artistID.toString());
         spotifyTopTrackQueryParams = new Hashtable<>();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String countryCode = preferences.getString(getString(R.string.country_pref_key), getString(R.string.country_pref_default_value));
@@ -92,21 +90,27 @@ public class ArtistTopTenFragment extends Fragment {
         toptenTask.execute(artistID);
         int i=0;
         for(Track x : tracks){
-            trackUrls[i]=(x.id);
-            i++;
+
+            try{
+                trackUrls[i]=(x.id);
+                i++;
+
+            }catch (Exception e){
+
+            }
         }
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    Track me=(Track) dataAdabter.getItem(position);
-                    MediaPlayerFragment.pos=position;
-                    if(getResources().getConfiguration().orientation==getResources().getConfiguration().ORIENTATION_LANDSCAPE){
-                        DialogFragment newdialog=new MediaPlayerFragment();
-                        newdialog.show(getActivity().getFragmentManager(),"Media Player");
-                    }else {
+                    Track me = (Track) dataAdabter.getItem(position);
+                    MediaPlayerFragment.pos = position;
+                    if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                        DialogFragment newdialog = new MediaPlayerFragment();
+                        newdialog.show(getActivity().getFragmentManager(), "Media Player");
+                    } else {
 
-                        newintent=new Intent(getActivity(),MediaPlayer.class);
+                        newintent = new Intent(getActivity(), MediaPlayer.class);
 
                         startActivity(newintent);
                     }
@@ -120,6 +124,20 @@ setRetainInstance(true);
         return rootview;
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        setRetainInstance(true);
+
+        outState.putSerializable("track",tracks);
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setRetainInstance(true);
+    }
+
     class TopTenTask extends AsyncTask<String, Void, List<Track>>{
         String artistID;
 

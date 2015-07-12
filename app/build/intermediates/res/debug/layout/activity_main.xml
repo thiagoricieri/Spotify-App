@@ -3,4 +3,4 @@
     android:name="com.example.amr.spotifystreamer.MainActivityFragment"
     tools:layout="@layout/fragment_main" android:layout_width="fill_parent"
     android:layout_height="fill_parent" />
-<!-- From: file:/home/amr/StudioProjects/Spotify-App/app/src/main/res/layout/activity_main.xml -->
+<!-- From: file:/C:/Users/amr_f/Documents/GitHub/Spotify-App/app/src/main/res/layout/activity_main.xml -->
