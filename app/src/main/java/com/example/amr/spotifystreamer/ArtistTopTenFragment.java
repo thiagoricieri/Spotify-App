@@ -259,8 +259,11 @@ class CustomListTopTen extends ArrayAdapter{
 
     public View getView(int position,View view,ViewGroup parent){
         Log.v("1","2");
-        LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.toptenitemview, null, true);
+	    View rowView = view;
+	    if(rowView == null) {
+		    LayoutInflater inflater = context.getLayoutInflater();
+		    rowView = inflater.inflate(R.layout.toptenitemview, null, true);
+	    }
         TextView songname=(TextView)rowView.findViewById(R.id.songTextView);
         TextView albumname=(TextView)rowView.findViewById(R.id.albumTextView);
         ImageView image=(ImageView)rowView.findViewById(R.id.albumArtImageView);
