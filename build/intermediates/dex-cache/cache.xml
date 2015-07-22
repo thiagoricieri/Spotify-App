@@ -2,74 +2,74 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\amr_f\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.2.0\c0b52915a48fa91b1b94a28d4a2997bac5f524df\okio-1.2.0.jar"
+        jar="/Users/thiagoricieri/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.2.0/c0b52915a48fa91b1b94a28d4a2997bac5f524df/okio-1.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="c0b52915a48fa91b1b94a28d4a2997bac5f524df">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\okio-1.2.0-228bb915c36d43ee0f459ad9bc672b1af17115c9.jar" />
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/okio-1.2.0-e1f65e16432db8e0489b9303f680035b8b253abe.jar" />
     </item>
     <item
-        jar="C:\Users\amr_f\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\1.9.0\a681c044244d9fc375198588297a39ba78028423\retrofit-1.9.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\retrofit-1.9.0-037eca00e727b0f1489bee848e2e8f17a9769413.jar" />
-    </item>
-    <item
-        jar="C:\Users\amr_f\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-b3a0e36087a06ecc606d0ad868ef4c6046c19f0c.jar" />
-    </item>
-    <item
-        jar="C:\Users\amr_f\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.2.0\959c454243581fdf730abfd4f4745441724bcf2c\okhttp-2.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="959c454243581fdf730abfd4f4745441724bcf2c">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\okhttp-2.2.0-11d94c1a9b39c844b8f2631380a7ccd53334baa9.jar" />
-    </item>
-    <item
-        jar="C:\Users\amr_f\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jar="/Users/thiagoricieri/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-3406545c276e9d1619f6734106a5aecaaa1c8868.jar" />
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-d57720f00c3a0750f7a7873f7382aa11bb7e369e.jar" />
     </item>
     <item
-        jar="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\exploded-aar\spotify-web-api-android-0.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d5bac9135a0fe4cda94550694d9c5567d415cb22">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\classes-2c25237bfaf4e136b43e7702e60eec285a193c6c.jar" />
-    </item>
-    <item
-        jar="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\classes-9c6ca06286186afc45b3af5ab5201cca9ef70080.jar" />
-    </item>
-    <item
-        jar="C:\Users\amr_f\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jar="/Users/thiagoricieri/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\gson-2.3.1-b756a7ccac2233b45c7292d19758e77255993d3d.jar" />
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/gson-2.3.1-21fe50f2d004adc93a969046bf70bb0a0daa68aa.jar" />
     </item>
     <item
-        jar="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jar="/Users/thiagoricieri/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.2.0/959c454243581fdf730abfd4f4745441724bcf2c/okhttp-2.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="959c454243581fdf730abfd4f4745441724bcf2c">
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/okhttp-2.2.0-bcc5aa5c2bc681829fc2a4eef447deffc761845d.jar" />
+    </item>
+    <item
+        jar="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/classes-51d1aceb780b7d8a9bfbf39c2ecb808be358f59a.jar" />
+    </item>
+    <item
+        jar="/Users/thiagoricieri/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/picasso-2.5.2-232ce201b27a102795c3fd93a34be17c7f839a41.jar" />
+    </item>
+    <item
+        jar="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-9845f0a1329ced069c9f430f6ffe5d1c90106e23.jar" />
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-3a9e563dda81811b142a17aad6455af84841c19d.jar" />
     </item>
     <item
-        jar="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jar="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/exploded-aar/spotify-web-api-android-0.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d5bac9135a0fe4cda94550694d9c5567d415cb22">
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/classes-d57a4a64712c1c4f0e8c55fce9f5a567e1167e45.jar" />
+    </item>
+    <item
+        jar="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="C:\Users\amr_f\Documents\GitHub\Spotify-App\app\build\intermediates\pre-dexed\debug\classes-f6acccb008a5398429e92d15876e779236a64ed4.jar" />
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/classes-2898cec4d6d50ec0ecb784bd3b4feaaa3ef7cc59.jar" />
+    </item>
+    <item
+        jar="/Users/thiagoricieri/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.9.0/a681c044244d9fc375198588297a39ba78028423/retrofit-1.9.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="/Users/thiagoricieri/Downloads/Spotify-App/app/build/intermediates/pre-dexed/debug/retrofit-1.9.0-5bbfb0a4a407c681567a2b6048c9b7d84c8b5b24.jar" />
     </item>
 
 </items>

@@ -174,7 +174,7 @@ setRetainInstance(true);
         @Override
         protected void onPostExecute(List<Track> tracks) {
             super.onPostExecute(tracks);
-            if(tracks.isEmpty()){
+            if(tracks == null || tracks.isEmpty()){
                 Toast.makeText(getActivity(),"No tracks found",Toast.LENGTH_LONG).show();
             }
             try {
