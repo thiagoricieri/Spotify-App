@@ -105,13 +105,12 @@ public class ArtistTopTenFragment extends Fragment {
                 try {
                     Track me = (Track) dataAdabter.getItem(position);
                     MediaPlayerFragment.pos = position;
-                    if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                    if (getResources().getBoolean(R.bool.is_tablet)) {
                         DialogFragment newdialog = new MediaPlayerFragment();
                         newdialog.show(getActivity().getFragmentManager(), "Media Player");
-                    } else {
-
+                    }
+                    else {
                         newintent = new Intent(getActivity(), MediaPlayer.class);
-
                         startActivity(newintent);
                     }
                 } catch (Exception e) {
